@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (requestCode ==1005){
                 photo=(Bitmap) data.getExtras().get("data");
+                img.setImageBitmap(photo);
 
 
             }else {
@@ -117,6 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+
+
+
                 }
 
 
