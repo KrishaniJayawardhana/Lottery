@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/otpConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_marginBottom="200dp"
+        android:layout_marginTop="20dp"
+        android:padding="20dp"
+        android:background="@drawable/ic_launcher_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/relativeMain"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="400dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="@+id/img"
+        >
+
+        <RelativeLayout
+            android:id="@+id/btnRelative"
+            android:layout_width="200dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="50dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/camara"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/camara"
+                />
+
+            <Button
+                android:id="@+id/gallary"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="60dp"
+                android:background="@drawable/gallary"
+                />
+
+        </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/btnRelative2"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_height="50dp"
+        android:orientation="horizontal" >
+
+
+    <TextView
+        android:id="@+id/lotNum"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="XX XX XX XX"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:padding="10dp"
+        />
+        
+        <Button
+            android:id="@+id/speakBtn"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="320dp"
+            android:padding="10dp"
+            android:background="@drawable/speaker"
+            />
+
+    </RelativeLayout>
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:text="Check Result"
+        android:elevation="24dp"
+        android:background="@drawable/button_corner_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+      />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
