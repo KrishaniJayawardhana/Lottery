@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img;
     private Button btn,SpeakBtn,camera,gallary;
     private TextView lotNum;
-    private TextToSpeech mtts;
+    private TextToSpeech mtts,mtts2;
     String SpeakOut;
 
     @Override
@@ -46,32 +46,14 @@ public class MainActivity extends AppCompatActivity {
         btn = findViewById(R.id.btn);
         lotNum = findViewById(R.id.lotNum);
         SpeakBtn = findViewById(R.id.speakBtn);
-        camera = findViewById(R.id.camara);
         gallary = findViewById(R.id.gallary);
 
-
-
-
-//        Intent intent1 = new Intent("android.media.action.IMAGE_CAPTURE");
-//        startActivityForResult(intent1, 1005);
-//        Log.d("cam", "cam");
-
-
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent1 = new Intent("android.media.action.IMAGE_CAPTURE");
-                startActivityForResult(intent1, 1005);
-                Log.d("cam", "cam");
-
-            }
-        });
+ // Select the image from correct location and it will upload to the Android Applicatio
+        // choose the image and send post request to flask testapi service
 
         gallary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 Intent intent2 = new Intent("android.media.action.READ_EXTERNAL_STORAGE");
                 intent2.setType("image/*");
@@ -84,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
     /**
      * Dispatch incoming result to the correct fragment.
      *
@@ -96,21 +74,20 @@ public class MainActivity extends AppCompatActivity {
      * @param data
      */
     @Override
+    // set the image into mobile application.
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         Bitmap photo = null;
-
         if (resultCode == RESULT_OK ) {
 
 
-            if (requestCode ==1005){
-                photo=(Bitmap) data.getExtras().get("data");
+            if (requestCode ==1005) {
+                photo = (Bitmap) data.getExtras().get("data");
                 img.setImageBitmap(photo);
+                }
 
-
-            }else {
+            else {
                 Uri uri = data.getData();
                 try {
                     photo = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -118,20 +95,9 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (IOException e) {
                     e.printStackTrace();
-
-
-
                 }
-
-
             }
-
-
         }
-
-
-
-
 
 
         mtts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -150,12 +116,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+//Encording image
         final Bitmap finalPhoto1 = photo;
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -168,10 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 APIService apiService = APIUtils.getApiService();
                 imagePass(imageRequest,apiService);
 
-
-
             }
-
 
         });
 
@@ -183,22 +145,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
 
 
     private void imagePass (final ImageRequest imageRequest, APIService apiService) {
 
-
-
-
         final KProgressHUD kProgressHUD = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setDimAmount(0.5f)
                 .show();
-
 
         apiService.imagePass(imageRequest).enqueue(new Callback<ImageResponse>() {
 
@@ -215,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ImageResponse> call, Response<ImageResponse> response) {
 
-
-
                 try {
                     kProgressHUD.dismiss();
                     Log.d("USER_REGISTRATION", response.raw().request().url().toString());
@@ -228,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
                             SpeakOut = response.body().getresult();
 //                            String[] separated = SpeakOut.split(" :");
 //                            separated [0];
+                            SpeakOut.replaceAll(" ",",");
 
                             lotNum.setText(SpeakOut);
 
@@ -239,7 +193,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "Error"+e, Toast.LENGTH_SHORT).show();
                 }
-
 
             }
 
@@ -253,28 +206,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ImageResponse> call, Throwable t) {
 
-
                     kProgressHUD.dismiss();
 
                     Toast.makeText(MainActivity.this, "Service Error", Toast.LENGTH_LONG).show();
-
-
-
 
             }
         });
 }
 
 
-
-
     private void speak() {
 
         mtts.speak(SpeakOut, TextToSpeech.QUEUE_FLUSH, null);
 
-
-
     }
 
+    private void speakTwo(String txt){
+
+        mtts.speak(SpeakOut,TextToSpeech.QUEUE_ADD,null);
+
+    }
 
 }

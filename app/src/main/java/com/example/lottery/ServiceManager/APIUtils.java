@@ -8,7 +8,7 @@ public class APIUtils {
     public static final String CONTENT_TYPE = "application/json";
 
 
-    public static final String BASE_URL = "http://172.20.10.3:5000/";
+    public static final String BASE_URL = "http://192.168.1.102:5000/";
 
 
     public static APIService getApiService() {
